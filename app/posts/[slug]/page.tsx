@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { formatPostDate } from "@/lib/format-date";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 
 type PostPageProps = {
@@ -7,16 +8,6 @@ type PostPageProps = {
     slug: string;
   }>;
 };
-
-const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-});
-
-function formatDate(date: string) {
-  return dateFormatter.format(new Date(`${date}T00:00:00+08:00`));
-}
 
 export function generateStaticParams() {
   return getAllPosts().map((post) => ({
@@ -54,7 +45,7 @@ export default async function PostPage({ params }: PostPageProps) {
     <article className="article-shell">
       <header className="article-header">
         <div className="post-meta">
-          <time dateTime={post.date}>{formatDate(post.date)}</time>
+          <time dateTime={post.date}>{formatPostDate(post.date)}</time>
           <span>{post.tags.join(" / ")}</span>
         </div>
         <h1>{post.title}</h1>

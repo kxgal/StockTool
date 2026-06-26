@@ -1,16 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { formatPostDate } from "@/lib/format-date";
 import { getAllPosts } from "@/lib/posts";
-
-const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-});
-
-function formatDate(date: string) {
-  return dateFormatter.format(new Date(`${date}T00:00:00+08:00`));
-}
 
 export default function Home() {
   const latestPosts = getAllPosts().slice(0, 5);
@@ -55,7 +46,7 @@ export default function Home() {
           {latestPosts.map((post) => (
             <article className="post-card" key={post.slug}>
               <div className="post-meta">
-                <time dateTime={post.date}>{formatDate(post.date)}</time>
+                <time dateTime={post.date}>{formatPostDate(post.date)}</time>
                 <span>{post.tags.join(" / ")}</span>
               </div>
               <h3>
