@@ -40,29 +40,25 @@ function validateMatter(data: unknown, filePath: string): PostMatter {
     );
   }
 
-  if (typeof data.title !== "string" || data.title.trim().length === 0) {
+  const { title, date, summary, tags, published } = data;
+
+  if (typeof title !== "string" || title.trim().length === 0) {
     errors.push("title must be a non-empty string");
   }
 
-  if (
-    typeof data.date !== "string" ||
-    !/^\d{4}-\d{2}-\d{2}$/.test(data.date)
-  ) {
+  if (typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     errors.push("date must use YYYY-MM-DD format");
   }
 
-  if (typeof data.summary !== "string" || data.summary.trim().length === 0) {
+  if (typeof summary !== "string" || summary.trim().length === 0) {
     errors.push("summary must be a non-empty string");
   }
 
-  if (
-    !Array.isArray(data.tags) ||
-    !data.tags.every((tag) => typeof tag === "string")
-  ) {
+  if (!Array.isArray(tags) || !tags.every((tag) => typeof tag === "string")) {
     errors.push("tags must be an array of strings");
   }
 
-  if (typeof data.published !== "boolean") {
+  if (typeof published !== "boolean") {
     errors.push("published must be a boolean");
   }
 
@@ -72,12 +68,18 @@ function validateMatter(data: unknown, filePath: string): PostMatter {
     );
   }
 
+  const validTitle = title as string;
+  const validDate = date as string;
+  const validSummary = summary as string;
+  const validTags = tags as string[];
+  const validPublished = published as boolean;
+
   return {
-    title: data.title.trim(),
-    date: data.date,
-    summary: data.summary.trim(),
-    tags: data.tags as string[],
-    published: data.published,
+    title: validTitle.trim(),
+    date: validDate,
+    summary: validSummary.trim(),
+    tags: validTags,
+    published: validPublished,
   };
 }
 
