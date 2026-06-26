@@ -80,7 +80,7 @@ a:hover {
   grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
   gap: 44px;
   align-items: center;
-  min-height: calc(100vh - 180px);
+  min-height: 460px;
   padding-bottom: 36px;
 }
 
